@@ -1,0 +1,4 @@
+nginx:
+  rootPath: /var/www/path
+  pvcName: pvcName
+  phpBackend: ""

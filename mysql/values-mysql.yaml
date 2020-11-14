@@ -1,0 +1,3 @@
+mysql:
+  path: /var/www/path
+  size: 10Gi

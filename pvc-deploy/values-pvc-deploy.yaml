@@ -1,0 +1,10 @@
+pvcDeploy:
+  path: "/target/path"
+  pvcName: pvcName
+  bucket: bucket
+  repository: repository
+  artifact: artifact
+  creds:
+    gcloud: "defaultsva.json"
+
+

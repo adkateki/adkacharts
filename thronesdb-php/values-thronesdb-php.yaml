@@ -1,0 +1,6 @@
+thronesdbPhp:
+  configPath: config 
+  pathPvc: thronesdb-pvc
+  path: /var/www/thronesdb/public
+  jsondataPvc: jsondata-pvc
+  jsondata: /var/www/thronesdb/throneteki-json-data

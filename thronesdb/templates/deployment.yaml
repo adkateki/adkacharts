@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "thronesdb.fullname" . }}
+  labels:
+    {{- include "thronesdb.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "thronesdb.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "thronesdb.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - mountpath: /var/www/thronesdb
+              name: thronesdb
+            - mountpath: /etc/nginx/nginx.conf
+              subpath: nginx.conf
+              name: config-front
+            - mountpath: /etc/nginx/sites-enabled/default
+              subpath: default
+              name: config-front
+      volumes:
+      - name: config-front
+        configMap:
+          name: {{ include "thronesdb.fullname" . }}
+      - name: skthronesdb
+        persistentVolumeClaim:
+          claimName: skthronesdb-pvc

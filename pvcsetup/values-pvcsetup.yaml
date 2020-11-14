@@ -1,0 +1,5 @@
+volumes:
+  app1:
+    pvc1:
+      mode: ReadWriteOnce
+      storage: 1Gi

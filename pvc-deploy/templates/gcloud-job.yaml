@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-gcloud
+spec:
+  template:
+    spec:
+      containers:
+      - name: gcp-deploy
+        image: google/cloud-sdk:latest
+        env:
+        - name: CLOUDSDK_CONFIG
+          value: /config/mygcloud
+        command: ["/bin/bash"]
+        args: ["-c", "rm -rf {{ .Values.pvcDeploy.path }}/* && gsutil cp gs://{{ .Values.pvcDeploy.bucket }}/{{ .Values.pvcDeploy.repository }}/{{ .Values.pvcDeploy.artifact }}.tar.gz . && tar -xf {{ .Values.pvcDeploy.artifact }}.tar.gz -C {{ .Values.pvcDeploy.path }}"]
+        #      args: ["-c", "sleep 50000"]
+        volumeMounts:
+        - mountPath: {{ .Values.pvcDeploy.path }}
+          name: target-pvc
+        - mountPath: /certs/default-sva.json
+          subPath: {{ .Values.pvcDeploy.creds.gcloud }}
+          name: creds
+        - mountPath: /root/.boto
+          subPath: .boto
+          name: creds
+      restartPolicy: Never
+      volumes:
+      - name: creds
+        configMap:
+          name: {{ .Release.Name }}-gcloud-file
+      - name: target-pvc
+        persistentVolumeClaim:
+          claimName: {{ .Values.pvcDeploy.pvcName }}
+  backoffLimit: 4
