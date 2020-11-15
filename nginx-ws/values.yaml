@@ -42,8 +42,11 @@ service:
 
 ingress:
   enabled: true
-  annotations: 
-    kubernetes.io/ingress.class: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    cert-manager.io/issuer: "letsencrypt-prod"
+    cert-manager.io/issue-temporary-certificate: "true"
+    acme.cert-manager.io/http01-edit-in-place: "true"
     #nginx.ingress.kubernetes.io/use-regex: "true"
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
@@ -51,10 +54,10 @@ ingress:
     - host: db.megametateki.com
       paths:
         - "/"
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  tls: 
+    - secretName: chart-example-tls
+      hosts:
+        - chart-example.local
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
