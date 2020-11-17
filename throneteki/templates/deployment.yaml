@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "throneteki.fullname" . }}
+  labels:
+    {{- include "throneteki.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "throneteki.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "throneteki.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "throneteki.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: api
+              containerPort: 4000
+              protocol: TCP
+            - name: socket
+              containerPort: 6000
+              protocol: TCP
+          envFrom:
+          - configMapRef:
+              name: {{ include "throneteki.envVars" .}}
+          volumeMounts:
+          - mountPath: {{ .Values.throneteki.path }}
+            name: publicpvc
+          - mountPath: {{ .Values.throneteki.jsondataPath }}
+            name: jsondatapvc
+          - mountPath: /usr/src/tekiserver/config/default.json5
+            subPath: default.json5
+            name: configmap
+      volumes:
+      - name: configmap
+        configMap:
+          name: {{ include "throneteki.config" .}}
+      - name: publicpvc
+        persistentVolumeClaim:
+          claimName: {{ .Values.throneteki.pathPvc }}
+      - name: jsondatapvc
+        persistentVolumeClaim:
+          claimName: {{ .Values.throneteki.jsondataPvc }}
+

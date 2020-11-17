@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "nginx-ws.name" -}}
+{{- define "throneteki-node.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -11,7 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "nginx-ws.fullname" -}}
+{{- define "throneteki-node.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -27,16 +27,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "nginx-ws.chart" -}}
+{{- define "throneteki-node.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "nginx-ws.labels" -}}
-helm.sh/chart: {{ include "nginx-ws.chart" . }}
-{{ include "nginx-ws.selectorLabels" . }}
+{{- define "throneteki-node.labels" -}}
+helm.sh/chart: {{ include "throneteki-node.chart" . }}
+{{ include "throneteki-node.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -46,24 +46,33 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "nginx-ws.selectorLabels" -}}
+{{- define "throneteki-node.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "throneteki-node.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "nginx-ws.serviceAccountName" -}}
+{{- define "throneteki-node.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "nginx-ws.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "throneteki-node.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
 
 {{/*
-Create the name of nginx.conf
+Create the name of throneteki node configmap
 */}}
-{{- define "nginx-ws.nginxconf" -}}
-{{- printf "%s-nginxconf" (include "nginx-ws.fullname" .) }}
+{{- define "throneteki-node.config" -}}
+{{- printf "%s-config" (include "throneteki-node.fullname" .) }}
 {{- end }}
+
+{{/*
+Create the name of throneteki  node config envvars
+*/}}
+{{- define "throneteki-node.envVars" -}}
+{{- printf "%s-envvar" (include "throneteki-node.fullname" .) }}
+{{- end }}
+

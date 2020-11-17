@@ -1,0 +1,8 @@
+thronetekiNode:
+  configPath: config
+  node_path: /usr/src/tekiserver/node_modules
+  lobbyHost: lobby
+  maxGames: 10
+  secret: thisIsYourSecret
+  mongoHost: mongodb
+

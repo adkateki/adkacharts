@@ -2,3 +2,4 @@ nginx:
   rootPath: /var/www/path
   pvcName: pvcName
   phpBackend: ""
+  configPath: nginxconfig

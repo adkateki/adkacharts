@@ -1,0 +1,17 @@
+{
+    env: 'production',
+    secret: '{{ .Values.thronetekiNode.secret }}',
+    hmacSecret: '{{ .Values.thronetekiNode.secret }}',
+
+    dbPath: 'mongodb://{{ .Values.thronetekiNode.mongoHost }}:27017/teki',
+    // This is the host/port of the Zero MQ server which does the node load balancing
+    requireActiviation: false,
+    appName: 'The Iron Throne',
+
+    mqHost: '{{ .Values.thronetekiNode.lobbyHost }}',
+    mqPort: 6000,
+    maxGames: {{ .Values.thronetekiNode.maxGames }}, 
+    minLobbyChatTime: 0, // The time (in seconds) an account has to be registered before it can chat in the lobby
+    host: '{{ .Values.ingress.host }}',
+    socketioPort: 5000
+}

@@ -1,0 +1,12 @@
+{{- $directory := .Values.thronetekiNode.configPath }}
+{{- $match := printf "%s/*" $directory }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "throneteki-node.config" . }}
+data:
+{{- range $path, $_ := (.Files.Glob $match) }}
+  {{- $prefix := printf "%s/" $directory }}
+  {{ trimPrefix $prefix $path }}: |
+    {{- tpl ($.Files.Get $path) $ | nindent 4 }}
+{{ end }}

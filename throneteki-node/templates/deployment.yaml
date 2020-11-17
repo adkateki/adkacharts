@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "throneteki-node.fullname" . }}
+  labels:
+    {{- include "throneteki-node.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "throneteki-node.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "throneteki-node.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/bin/bash"]
+          args: ["-c", "node server/gamenode"]
+          ports:
+            - name: ws
+              containerPort: 5000
+              protocol: TCP
+          envFrom:
+          - configMapRef:
+              name: {{ include "throneteki-node.envVars" . }}
+          volumeMounts:
+          - mountPath: /usr/src/tekiserver/config/default.json5
+            subPath: default.json5
+            name: configmap
+      volumes:
+      - name: configmap
+        configMap:
+          name: {{ include "throneteki-node.config" . }}
+ 

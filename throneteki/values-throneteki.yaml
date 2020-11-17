@@ -1,0 +1,8 @@
+throneteki:
+  path: "" 
+  pathPvc: "" 
+  jsondataPath: ""
+  jsondataPvc: ""
+  configPath: ""
+  node_path: "" 
+

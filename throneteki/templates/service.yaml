@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "throneteki.fullname" . }}
+  labels:
+    {{- include "throneteki.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: api
+      protocol: TCP
+      name: api
+    - port: {{ .Values.service.portZmq }}
+      targetPort: socket
+      protocol: TCP
+      name: socket
+  selector:
+    {{- include "throneteki.selectorLabels" . | nindent 4 }}

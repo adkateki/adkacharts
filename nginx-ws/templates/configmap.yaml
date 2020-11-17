@@ -1,6 +1,7 @@
+{{- $directory := printf "%s/*" .Values.nginx.configPath }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "nginx-ws.nginxconf" . }}
 data:
-{{ (.Files.Glob "nginxconfig/*").AsConfig | indent 2 }}
+{{ (.Files.Glob $directory).AsConfig | indent 2 }}
