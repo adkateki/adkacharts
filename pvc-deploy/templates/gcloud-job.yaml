@@ -12,7 +12,7 @@ spec:
         - name: CLOUDSDK_CONFIG
           value: /config/mygcloud
         command: ["/bin/bash"]
-        args: ["-c", "rm -rf {{ .Values.pvcDeploy.path }}/* && gsutil cp gs://{{ .Values.pvcDeploy.bucket }}/{{ .Values.pvcDeploy.repository }}/{{ .Values.pvcDeploy.artifact }}.tar.gz . && tar -xf {{ .Values.pvcDeploy.artifact }}.tar.gz -C {{ .Values.pvcDeploy.path }}"]
+        args: ["-c", "{{- if .Values.pvcDeploy.remove }} rm -rf {{ .Values.pvcDeploy.path }}/*  && {{ end }} gsutil cp gs://{{ .Values.pvcDeploy.bucket }}/{{ .Values.pvcDeploy.repository }}/{{ .Values.pvcDeploy.artifact }}.tar.gz . && tar -xf {{ .Values.pvcDeploy.artifact }}.tar.gz -C {{ .Values.pvcDeploy.destPath }}"]
         #      args: ["-c", "sleep 50000"]
         volumeMounts:
         - mountPath: {{ .Values.pvcDeploy.path }}

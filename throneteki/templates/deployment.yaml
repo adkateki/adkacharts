@@ -51,6 +51,9 @@ spec:
           - mountPath: /usr/src/tekiserver/config/default.json5
             subPath: default.json5
             name: configmap
+          - mountPath: /usr/src/tekiserver/server/scripts/fetchdata.js
+            subPath: fetchdata.js
+            name: configmap
       volumes:
       - name: configmap
         configMap:
