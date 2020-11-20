@@ -1,0 +1,91 @@
+apiVersion: v1
+entries:
+  mongodb:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-11-20T23:52:54.860503664Z"
+    description: A Helm chart for Kubernetes
+    digest: efc101544002735e116e793f64842bf4a33a51aff7cb745db92a0c37ce05425e
+    name: mongodb
+    type: application
+    urls:
+    - https://adkateki.github.io/adkacharts/mongodb-0.1.0.tgz
+    version: 0.1.0
+  mysql:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-11-20T23:52:54.860950873Z"
+    description: A Helm chart for Kubernetes
+    digest: da57c5414a643c89af4147f8a36e4be38c15f284bede4c1248a2cd9ac847e82c
+    name: mysql
+    type: application
+    urls:
+    - https://adkateki.github.io/adkacharts/mysql-0.1.0.tgz
+    version: 0.1.0
+  nginx-ws:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-11-20T23:52:54.861373776Z"
+    description: A Helm chart for Kubernetes
+    digest: 2ce8643fda5ea6989be3fdac0042d22418d25410f708c391881ce013e2f5e2b5
+    name: nginx-ws
+    type: application
+    urls:
+    - https://adkateki.github.io/adkacharts/nginx-ws-0.1.0.tgz
+    version: 0.1.0
+  pvc-deploy:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-11-20T23:52:54.861809166Z"
+    description: A Helm chart for Kubernetes
+    digest: 43f79cbbcdb6c99b8823e9d8469ef0eb764d2521b0ed2ae87f23ce20f65c2dbb
+    name: pvc-deploy
+    type: application
+    urls:
+    - https://adkateki.github.io/adkacharts/pvc-deploy-0.1.0.tgz
+    version: 0.1.0
+  pvcsetup:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-11-20T23:52:54.862167227Z"
+    description: A Helm chart for Kubernetes
+    digest: 165af3938734ccb38e81e35777da924940c49d7f58ba7c018e9df69fd068ba08
+    name: pvcsetup
+    type: application
+    urls:
+    - https://adkateki.github.io/adkacharts/pvcsetup-0.1.0.tgz
+    version: 0.1.0
+  thronesdb-php:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-11-20T23:52:54.862816268Z"
+    description: A Helm chart for Kubernetes
+    digest: 37952c349159f21863c27f2c81808e3e83d4f766181d5a53e863acfcc0f1d20c
+    name: thronesdb-php
+    type: application
+    urls:
+    - https://adkateki.github.io/adkacharts/thronesdb-php-0.1.0.tgz
+    version: 0.1.0
+  throneteki:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-11-20T23:52:54.863254359Z"
+    description: A Helm chart for Kubernetes
+    digest: ba282b6bb9b53f586b395462b2f3abe7bcd01bc689a862031cc1117272456ef7
+    name: throneteki
+    type: application
+    urls:
+    - https://adkateki.github.io/adkacharts/throneteki-0.1.0.tgz
+    version: 0.1.0
+  throneteki-node:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-11-20T23:52:54.863869901Z"
+    description: A Helm chart for Kubernetes
+    digest: 2a85516718f14ba9a45be5b862a6914b3279e7da7b4a142dff7789e51506cc34
+    name: throneteki-node
+    type: application
+    urls:
+    - https://adkateki.github.io/adkacharts/throneteki-node-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-11-20T23:52:54.86000255Z"
