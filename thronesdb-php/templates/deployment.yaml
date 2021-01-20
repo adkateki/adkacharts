@@ -41,7 +41,7 @@ spec:
             - mountPath: {{ .Values.thronesdbPhp.path }}
               name: publicpvc
             - mountPath: /var/www/thronesdb/.env.local
-              subPath: .env.local
+              subPath: env.local
               name: configmap
             - mountPath: {{ .Values.thronesdbPhp.jsondata }}
               name: jsondatapvc
